@@ -31,7 +31,6 @@ public class Experience implements Serializable {
     }
 
     public Experience(String image, String company, String position, String startDate, String endDate, String descripcion) {
-        this.id = id;
         this.image = image;
         this.company = company;
         this.position = position;
