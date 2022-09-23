@@ -83,7 +83,7 @@ public class authController {
 
             return new ResponseEntity(jwtDTO, HttpStatus.OK);
         } catch (BadCredentialsException e) {
-            return new ResponseEntity(new Message("Incorrect password."), HttpStatus.OK);
+            return new ResponseEntity(new Message("Incorrect password."), HttpStatus.BAD_REQUEST);
         }
     }
 
