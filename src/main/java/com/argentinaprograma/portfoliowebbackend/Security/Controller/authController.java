@@ -9,6 +9,7 @@ import com.argentinaprograma.portfoliowebbackend.Security.JWT.JwtProvider;
 import com.argentinaprograma.portfoliowebbackend.Security.Model.Rol;
 import com.argentinaprograma.portfoliowebbackend.Security.Model.User;
 import com.argentinaprograma.portfoliowebbackend.Security.Service.RolService;
+import com.argentinaprograma.portfoliowebbackend.Security.Service.UserDetailsServiceImpl;
 import com.argentinaprograma.portfoliowebbackend.Security.Service.UserService;
 import com.argentinaprograma.portfoliowebbackend.Util.ResponseHandler;
 import java.util.HashSet;
@@ -41,7 +42,9 @@ public class authController {
 
     @Autowired
     AuthenticationManager authenticationManager;
-
+    @Autowired
+    UserDetailsServiceImpl userDetailsServiceImpl;
+    
     @Autowired
     UserService userService;
 
@@ -71,16 +74,17 @@ public class authController {
         }
 
         try {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    loginUser.getUsername(),
-                    loginUser.getPassword()
+            Authentication authentication = 
+                    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                        loginUser.getUsername(),
+                        loginUser.getPassword()
             ));
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            //UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(loginUser.getUsername());
             String jwt = jwtProvider.generateToken(authentication);
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             JwtDTO jwtDTO = new JwtDTO(jwt, userDetails.getUsername(), userDetails.getAuthorities());
-
             return new ResponseEntity(jwtDTO, HttpStatus.OK);
         } catch (BadCredentialsException e) {
             return new ResponseEntity(new Message("Incorrect password."), HttpStatus.BAD_REQUEST);

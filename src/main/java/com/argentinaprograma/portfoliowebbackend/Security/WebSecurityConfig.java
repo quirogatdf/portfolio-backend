@@ -28,10 +28,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     JwtEntryPoint jwtEntryPoint;
     
-    @Bean
-    public JwtTokenFilter jwtTokenFilter(){
-        return new JwtTokenFilter();
+    private final JwtTokenFilter jwtTokenFilter;
+    public WebSecurityConfig(JwtTokenFilter jwtTokenFilter){
+        this.jwtTokenFilter = jwtTokenFilter;
     }
+    
+    
+    /*public JwtTokenFilter jwtTokenFilter(){
+        return new JwtTokenFilter();
+    }*/
     
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -64,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
                .and()
                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-       http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+       http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
 }

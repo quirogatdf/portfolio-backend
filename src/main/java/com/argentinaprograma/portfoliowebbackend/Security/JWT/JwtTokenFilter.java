@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+@Component
 public class JwtTokenFilter extends OncePerRequestFilter {
 
     private final static Logger logger = LoggerFactory.getLogger(JwtTokenFilter.class);
@@ -25,10 +27,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     UserDetailsServiceImpl userDetailsService;
 
     private String getToken(HttpServletRequest request) {
-        String header = request.getHeader("Authorization");
+        final String header = request.getHeader( "Authorization");
         if (header != null && header.startsWith("Bearer")) {
-            System.out.println(header);
-            return header.replace("Bearer", "");
+            return header.replace("Bearer ", "");
         }
         return null;
     }
@@ -37,15 +38,14 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain) throws ServletException, IOException {
         try {
             String token = getToken(req);
-            if (token != null && jwtProvider.validateToken(token)) {
-                String username = jwtProvider.getUsernameFromToken(token);
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
+            if ( token != null && jwtProvider.validateToken(token) ) {
+                String Username = jwtProvider.getUsernameFromToken(token);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(Username);
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         } catch (Exception e) {
-            logger.error("JWT Token does not begin with Bearer String" + e.getMessage());
+            logger.error("Fail en el método doFilter " + e.getMessage());
         }
         filterChain.doFilter(req, res);
     }

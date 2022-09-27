@@ -1,4 +1,3 @@
-
 package com.argentinaprograma.portfoliowebbackend.Security.JWT;
 
 import java.io.IOException;
@@ -11,15 +10,16 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
+/*Verifica que haya un token válido sino devuelve error 401*/
 @Component
-public class JwtEntryPoint implements AuthenticationEntryPoint{
-    //private final static Logger logger = LoggerFactory.getLogger(JwtEntryPoint.class);
-    
+public class JwtEntryPoint implements AuthenticationEntryPoint {
+
+    private final static Logger logger = LoggerFactory.getLogger(JwtEntryPoint.class);
+
     @Override
     public void commence(HttpServletRequest req, HttpServletResponse res, AuthenticationException e) throws IOException, ServletException {
-        //logger.error("Fail en el mètodo commence")
+        logger.error("Fail en el mètodo commence");
         res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "no autorizado");
     }
-    
-    
+
 }
