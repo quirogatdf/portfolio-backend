@@ -40,6 +40,7 @@ public class PersonalInformationController {
         Optional <User> usuario = userRepository.findByUsername(userName);
         Long user_id = usuario.get().getId();
         Optional<PersonalInformation> data = personalInformationRepository.findByUserId(user_id);
+        System.out.println(data);
         return new ResponseEntity((data), HttpStatus.OK);
     }
     @PutMapping("/edit/{id}")
