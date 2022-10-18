@@ -13,6 +13,7 @@ public class PersonalInformationDTO {
     private String title;
     private String about;
     private String phone;
+    private String ubication;
     private String mail;
     private String profileImage;
     private String bannerImage;
@@ -20,12 +21,13 @@ public class PersonalInformationDTO {
     public PersonalInformationDTO() {
     }
 
-    public PersonalInformationDTO(String name, String lastname, String title, String about, String phone, String mail, String profileImage, String bannerImage) {
+    public PersonalInformationDTO(String name, String lastname, String title, String about, String phone, String ubication, String mail, String profileImage, String bannerImage) {
         this.name = name;
         this.lastname = lastname;
         this.title = title;
         this.about = about;
         this.phone = phone;
+        this.ubication = ubication;
         this.mail = mail;
         this.profileImage = profileImage;
         this.bannerImage = bannerImage;

@@ -9,4 +9,7 @@ INSERT INTO rol (role_name) VALUES ('ROLE_ADMIN');
 INSERT INTO rol (role_name) VALUES ('ROLE_USER');
 
 INSERT INTO user_role(user_id, role_id) VALUES (1,1);
-INSERT INTO user_role(user_id, role_id) VALUE (2,2);
+INSERT INTO user_role(user_id, role_id) VALUES (2,2);
+
+INSERT INTO personal_information (id, about, banner_image, lastname, mail, name, phone, profile_image, title, ubication, user_id) VALUES (NULL, '👋🏻Hola! Soy Emanuel, estudiante de Desarrollador Web Full Stack, un curso creado por el Ministerio de Desarrollo Productivo de Argentina. ', 'https://serving.photos.photobox.com/5452879570c8379f0043349add9b79895419734f797da184c8e0d7b2fabafee406656ba7.jpg', 'Quiroga', 'quirogatdf@gmail.com', 'Marcelo Emanuel', '1232131', 'https://i.pinimg.com/originals/74/aa/12/74aa122cc4c839fe08967cfddb6a158d.jpg', 'Desarrollador Web Fullstack Jr', 'Río Grande, Tierra del Fuego', 1);
+INSERT INTO personal_information (id, about, banner_image, lastname, mail, name, phone, profile_image, title, ubication, user_id) VALUES (NULL, 'Soy Andrea frias', 'https://serving.photos.photobox.com/5452879570c8379f0043349add9b79895419734f797da184c8e0d7b2fabafee406656ba7.jpg', 'Quiroga', 'quirogatdf@gmail.com', 'Marcelo Emanuel', '1232131', 'https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2020/12/Sailor-Moon_-Fan-Art-recrea-a-Serena-con-un-estilo-cyberpunk-1.jpg', 'Desarrollador Web Fullstack Jr', 'Río Grande, Tierra del Fuego', 2);

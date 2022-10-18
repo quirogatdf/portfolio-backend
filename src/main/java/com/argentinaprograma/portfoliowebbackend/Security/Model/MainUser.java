@@ -9,9 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class MainUser implements UserDetails {
 
-    private String username;
-    private String password;
-    private Collection<? extends GrantedAuthority> authorities;
+    private final String username;
+    private final String password;
+    private final Collection<? extends GrantedAuthority> authorities;
 
     public MainUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         this.username = username;
@@ -25,7 +25,7 @@ public class MainUser implements UserDetails {
                 .getRoleName().name())).collect(Collectors.toList());
         return new MainUser(user.getUsername(), user.getPassword(), authorities);
     }
-
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;

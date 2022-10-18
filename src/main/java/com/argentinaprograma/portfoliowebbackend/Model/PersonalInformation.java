@@ -32,11 +32,12 @@ public class PersonalInformation implements Serializable {
     private String title;
     private String about;
     private String phone;
+    private String ubication;
     @Email
     private String mail;
-    @Column(name = "profile_image", length=100)
+    @Column(name = "profile_image", length=200)
     private String profileImage;
-    @Column(name = "banner_image", length=100)
+    @Column(name = "banner_image", length=200)
     private String bannerImage;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -46,12 +47,13 @@ public class PersonalInformation implements Serializable {
     public PersonalInformation() {
     }
 
-    public PersonalInformation(String name, String lastname, String title, String about, String phone, String mail, String profileImage, String bannerImage) {
+    public PersonalInformation(String name, String lastname, String title, String about, String phone, String ubication, String mail, String profileImage, String bannerImage) {
         this.name = name;
         this.lastname = lastname;
         this.title = title;
         this.about = about;
         this.phone = phone;
+        this.ubication = ubication;
         this.mail = mail;
         this.profileImage = profileImage;
         this.bannerImage = bannerImage;

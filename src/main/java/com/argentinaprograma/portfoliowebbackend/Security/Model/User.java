@@ -45,5 +45,9 @@ public class User implements Serializable {
         this.username = username;
         this.password = password;
     }
+    
+    public User(Long id){
+        this.id = id;
+    }
 
 }
