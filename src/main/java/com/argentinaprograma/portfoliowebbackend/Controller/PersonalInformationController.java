@@ -11,6 +11,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +34,7 @@ public class PersonalInformationController {
     UserRepository userRepository;
     @Autowired
     JwtProvider jwtProvider;
-
+            
     @GetMapping("/view/{username}")
     @ResponseBody
     public ResponseEntity<PersonalInformation> getPersonalInformationById(@PathVariable("username") String userName) {
@@ -43,22 +44,31 @@ public class PersonalInformationController {
         System.out.println(data);
         return new ResponseEntity((data), HttpStatus.OK);
     }
+    
+    
     @PutMapping("/edit/{id}")
-    public ResponseEntity<PersonalInformation> updatePersonalInformationById(@PathVariable("id")long id,  @RequestHeader(name = "Authorization") String token) {
+    public ResponseEntity<PersonalInformation> updatePersonalInformationById(@PathVariable("id")long id,  @RequestHeader(name = "Authorization") String token, @RequestBody PersonalInformation user) {
                /* Obtener usuario del Token */
         String getUsername = jwtProvider.getUsernameFromToken(token.split(" ")[1]);
 
         Optional<PersonalInformation> data = personalInformationRepository.findById(id);
         /* Verifica que la información pertenezca al usuario autenticado */
         if (!data.get().getUser().getUsername().equals(getUsername)) {
-            
             return new ResponseEntity(new Message("No autorizado","Error"), HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity((data), HttpStatus.OK);
+            
+            PersonalInformation updateAbout = data.get();
+            if (user.getName() != null){
+                updateAbout.setName(user.getName());
+            }
+            if (user.getLastname()!= null){
+                updateAbout.setLastname(user.getLastname());
+            }
+            if(user.getTitle()!=null){
+                updateAbout.setTitle(user.getTitle());
+            }
+            PersonalInformation updatedPersonalInformation = this.personalInformationRepository.save(updateAbout);
+            return new ResponseEntity(updatedPersonalInformation, HttpStatus.OK);
         }
-    }
-    @PostMapping("/add")
-    public PersonalInformation create(@RequestBody PersonalInformationDTO personalInformation) {
-        return null;
     }
 }
