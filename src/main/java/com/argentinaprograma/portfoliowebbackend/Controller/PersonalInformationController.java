@@ -8,6 +8,7 @@ import com.argentinaprograma.portfoliowebbackend.Security.JWT.JwtProvider;
 import com.argentinaprograma.portfoliowebbackend.Security.Model.User;
 import com.argentinaprograma.portfoliowebbackend.Security.Repository.UserRepository;
 import java.util.Optional;
+import javax.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,8 +45,7 @@ public class PersonalInformationController {
         System.out.println(data);
         return new ResponseEntity((data), HttpStatus.OK);
     }
-    
-    
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/edit/{id}")
     public ResponseEntity<PersonalInformation> updatePersonalInformationById(@PathVariable("id")long id,  @RequestHeader(name = "Authorization") String token, @RequestBody PersonalInformation user) {
                /* Obtener usuario del Token */

@@ -3,6 +3,7 @@ package com.argentinaprograma.portfoliowebbackend.Service;
 import com.argentinaprograma.portfoliowebbackend.Model.Experience;
 import com.argentinaprograma.portfoliowebbackend.Repository.ExperienceRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,18 +20,24 @@ public class ExperienceService {
     }
 
     /* Método para listar experiencia por Id */
-    public Experience searchExperience(Long id) {
-        return experienceRepository.findById(id).orElse(null);
+    public Optional <Experience> getById(Long id) {
+        return experienceRepository.findById(id);
     }
 
+
     /* Método para crear una experiencia */
-    public void createExperience(Experience experience) {
+    public void save(Experience experience) {
         experienceRepository.save(experience);
     }
     
     /* Método para eliminar una experiencia */
     public void deleteExperience(Long id) {
         experienceRepository.deleteById(id);
+    }
+    
+    public boolean existsById(Long id){
+        return experienceRepository.existsById(id);
+
     }
 
 }

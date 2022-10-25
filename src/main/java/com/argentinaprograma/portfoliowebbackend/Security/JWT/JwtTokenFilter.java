@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-@Component
+
 public class JwtTokenFilter extends OncePerRequestFilter {
 
     private final static Logger logger = LoggerFactory.getLogger(JwtTokenFilter.class);
@@ -28,7 +28,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     private String getToken(HttpServletRequest request) {
         final String header = request.getHeader( "Authorization");
-        if (header != null && header.startsWith("Bearer")) {
+        if (header != null && header.startsWith("Bearer ")) {
             return header.replace("Bearer ", "");
         }
         return null;

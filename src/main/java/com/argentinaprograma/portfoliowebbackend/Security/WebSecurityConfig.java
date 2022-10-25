@@ -24,24 +24,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     UserDetailsServiceImpl userDetailsService;
-    
+
     @Autowired
     JwtEntryPoint jwtEntryPoint;
-    
-    private final JwtTokenFilter jwtTokenFilter;
-    public WebSecurityConfig(JwtTokenFilter jwtTokenFilter){
-        this.jwtTokenFilter = jwtTokenFilter;
-    }
-    
-    
-    /*public JwtTokenFilter jwtTokenFilter(){
+
+    @Bean
+    public JwtTokenFilter jwtTokenFilter() {
         return new JwtTokenFilter();
-    }*/
-    
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -57,21 +53,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
-    
-   
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-       http.cors().and().csrf().disable()
-               .authorizeRequests()
-               .antMatchers("/api/v1/auth/**").permitAll()
-               .antMatchers("/api/v1/about/view/**").permitAll()
-               .antMatchers("/api/v1/about/edit/**").permitAll()
-               .anyRequest().authenticated()
-               .and()
-               .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
-               .and()
-               .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-       http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http.cors().and().csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/api/v1/auth/**").permitAll()
+                .antMatchers("/api/v1/about/view/**").permitAll()
+                .antMatchers("/api/v1/experience/view/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+               ;
+        http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
 }
