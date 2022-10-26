@@ -67,6 +67,7 @@ public class ExperienceController {
         
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long Id) {
         experienceService.deleteExperience(Id);

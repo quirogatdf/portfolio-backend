@@ -1,14 +1,12 @@
 package com.argentinaprograma.portfoliowebbackend.Controller;
 
 import com.argentinaprograma.portfoliowebbackend.Dto.Message;
-import com.argentinaprograma.portfoliowebbackend.Dto.PersonalInformationDTO;
 import com.argentinaprograma.portfoliowebbackend.Model.PersonalInformation;
 import com.argentinaprograma.portfoliowebbackend.Repository.PersonalInformationRepository;
 import com.argentinaprograma.portfoliowebbackend.Security.JWT.JwtProvider;
 import com.argentinaprograma.portfoliowebbackend.Security.Model.User;
 import com.argentinaprograma.portfoliowebbackend.Security.Repository.UserRepository;
 import java.util.Optional;
-import javax.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +14,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -54,7 +51,7 @@ public class PersonalInformationController {
         Optional<PersonalInformation> data = personalInformationRepository.findById(id);
         /* Verifica que la información pertenezca al usuario autenticado */
         if (!data.get().getUser().getUsername().equals(getUsername)) {
-            return new ResponseEntity(new Message("No autorizado","Error"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Message("No autorizado","401"), HttpStatus.BAD_REQUEST);
         } else {
             
             PersonalInformation updateAbout = data.get();
@@ -66,6 +63,24 @@ public class PersonalInformationController {
             }
             if(user.getTitle()!=null){
                 updateAbout.setTitle(user.getTitle());
+            }
+            if ( user.getAbout() != null ) {
+                updateAbout.setAbout(user.getAbout());
+            }
+            if (user.getPhone() != null) {
+                updateAbout.setPhone(user.getPhone());
+            }
+            if ( user.getUbication() != null ){
+                updateAbout.setUbication(user.getUbication());
+            }
+            if(user.getMail()!=null){
+                updateAbout.setMail(user.getMail());
+            }
+            if ( user.getProfileImage() != null ){
+                updateAbout.setProfileImage(user.getProfileImage());
+            }
+            if ( user.getBannerImage() != null ){
+                updateAbout.setBannerImage(user.getBannerImage());
             }
             PersonalInformation updatedPersonalInformation = this.personalInformationRepository.save(updateAbout);
             return new ResponseEntity(updatedPersonalInformation, HttpStatus.OK);

@@ -7,9 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ExperienceDTO {
-
-    @NotBlank
-    private String empresa;
     @NotBlank
     private String image;
     @NotBlank
@@ -27,8 +24,7 @@ public class ExperienceDTO {
 
     }
 
-    public ExperienceDTO(@NotBlank String empresa,@NotBlank String image,@NotBlank String company,@NotBlank String position,@NotBlank String startDate,@NotBlank String endDate,@NotBlank String descripcion) {
-        this.empresa = empresa;
+    public ExperienceDTO(@NotBlank String image,@NotBlank String company,@NotBlank String position,@NotBlank String startDate,@NotBlank String endDate,@NotBlank String descripcion) {
         this.image = image;
         this.company = company;
         this.position = position;
