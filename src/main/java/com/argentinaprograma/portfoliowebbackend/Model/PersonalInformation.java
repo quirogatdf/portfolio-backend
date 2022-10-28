@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,9 +26,9 @@ public class PersonalInformation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull(message = "Name is required")
+    @NotBlank(message = "Name is required")
     private String name;
-    @NotNull(message = "Last Name is required")
+    @NotBlank(message = "Last Name is required")
     private String lastname;
     private String title;
     private String about;

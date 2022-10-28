@@ -1,6 +1,7 @@
 
 package com.argentinaprograma.portfoliowebbackend.Model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,15 +20,16 @@ public class Skill {
     @NotBlank
     private String skill;
     private String percent;
-    private String image;
+    @Column(name="image_skill")
+    private String imageSkill;
 
     public Skill() {
     }
 
-    public Skill(String skill,String percent, String image) {
+    public Skill(String skill,String percent, String imageSkill) {
         this.skill = skill;
         this.percent = percent;
-        this.image = image;
+        this.imageSkill = imageSkill;
     }
      
 }

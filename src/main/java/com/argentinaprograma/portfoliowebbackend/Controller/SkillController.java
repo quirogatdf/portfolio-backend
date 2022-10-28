@@ -42,7 +42,7 @@ public class SkillController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody SkillDTO s) {
-        Skill newSkill = new Skill(s.getSkill(), s.getPercent(), s.getImage());
+        Skill newSkill = new Skill(s.getSkill(), s.getPercent(), s.getImageSkill());
         skillService.save(newSkill);
         return new ResponseEntity(new Message("Nuevo registro cargado con éxito", "200"), HttpStatus.OK);
     }
@@ -56,7 +56,7 @@ public class SkillController {
         Skill skill = skillService.getById(id).get();
         skill.setSkill(skillDTO.getSkill());
         skill.setPercent(skillDTO.getPercent());
-        skill.setImage(skillDTO.getImage());
+        skill.setImageSkill(skillDTO.getImageSkill());
         skillService.save(skill);
         return new ResponseEntity(new Message("Registro actualizado correctamente", "200"), HttpStatus.OK);
 

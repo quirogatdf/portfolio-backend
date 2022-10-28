@@ -9,15 +9,15 @@ public class SkillDTO {
     @NotBlank
     private String skill;
     private String percent;
-    private String image;
+    private String imageSkill;
 
     public SkillDTO() {
     }
 
-    public SkillDTO(String skill, String percent, String image) {
+    public SkillDTO(String skill, String percent, String imageSkill) {
         this.skill = skill;
         this.percent = percent;
-        this.image = image;
+        this.imageSkill = imageSkill;
     }
     
     
